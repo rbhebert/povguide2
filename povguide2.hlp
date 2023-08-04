@@ -16,7 +16,7 @@ help for {hi:povguide2}
 
 {p 4 4 2}
 {cmd:povguide2} generates a numeric variable representing the official
-U.S. poverty guideline. This is an update to the original {cmd:povguide2} by David Kantor.
+U.S. poverty guideline. This is an update to the original {cmd:povguide} by David Kantor.
 
 {p 4 4 2}
 Important: this is one of two official poverty levels
