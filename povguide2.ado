@@ -1,13 +1,23 @@
 /*-----------------------------------------------------------------------
 Update to POVGUIDE
 Originally written by David Kantor
-Updated by Reginald Hebert
-4 August 2023 - Added years through 2023
+Updated by Reginald Hebert (rhebert3@student.gsu.edu)
+20 August 2023 	- 	Added Alaska and Hawaii tables, plus option for enabling 
+					state FIPS as an argument
+4 August 2023 	- 	Added years through 2023
 -------------------------------------------------------------------------
 Original module: 
 https://econpapers.repec.org/software/bocbocode/s456935.htm
+
 Data from: 
 https://aspe.hhs.gov/topics/poverty-economic-mobility/poverty-guidelines
+
+Data for pre-1983 comes from Annual Statistical Supplement to the Social 
+Security Bulletin, table 3.E8
+e.g. https://www.ssa.gov/policy/docs/statcomps/supplement/2014/supplement14.pdf
+
+For additional details see:
+Fisher, Gordon M. "Poverty Guidlines for 1992." Soc. Sec. Bull. 55 (1992): 43.
 -----------------------------------------------------------------------*/
 
 
@@ -15,14 +25,12 @@ https://aspe.hhs.gov/topics/poverty-economic-mobility/poverty-guidelines
 program def povguide2
 version 17
 
-syntax , gen(string) famsize(string) year(string)
-/* Could have famsize(varname) year(integer); that's a bit more restrictive.
-year is most likely a constant, but we allow it to be an expression.
+syntax , gen(string) famsize(string) year(string) [fips(string)]
+/*
+We allow the addition of an optional FIPS code to identify Alaska and Hawaii
 
-Thus, both famsize and year can be expressions.
-
-Some programming borrowed from cpiadj.ado.
-
+Omitting this argument generates the standard contiguous 48-states FPG for 
+all observations.
 */
 
 capture confirm new var `gen'
@@ -92,6 +100,128 @@ matrix input `povtable' = (
 #delimit cr
 
 
+tempname povtableAK
+
+#delimit ;
+matrix input `povtableAK' = (
+/*       base  incr */
+2200,	700	\
+2330,	740	\
+2590,	820	\
+2800,	900	\
+2970,	960	\
+3140,	1020	\
+3400,	1100	\
+4760,	1520	\
+5410,	1720	\
+5870,	1920	\
+6080,	2100	\
+6240,	2170	\
+6560,	2250	\
+6700,	2350	\
+6860,	2380	\
+7210,	2450	\
+7480,	2550	\
+7840,	2680	\
+8290,	2820	\
+8500,	2980	\
+8700,	3080	\
+9200,	3100	\
+9340,	3200	\
+9660,	3280	\
+9870,	3400	\
+10070,	3500	\
+10320,	3520	\
+10430,	3630	\
+10730,	3780	\
+11080,	3850	\
+11210,	3930	\
+11630,	3980	\
+11950,	4080	\
+12250,	4250	\
+12770,	4350	\
+13000,	4500	\
+13530,	4680	\
+13530,	4680	\
+13600,	4780	\
+13970,	4950	\
+14350,	5030	\
+14580,	5080	\
+14720,	5200	\
+14840,	5180	\
+15060,	5230	\
+15180,	5400	\
+15600,	5530	\
+15950,	5600	\
+16090,	5680	\
+16990,	5900	\
+18210,	6430	
+);
+#delimit cr
+
+
+
+
+tempname povtableHI
+
+#delimit ;
+matrix input `povtableHI' = (
+/*       base  incr */
+2200,	700	\
+2330,	740	\
+2590,	820	\
+2800,	900	\
+2970,	960	\
+3140,	1020	\
+3400,	1100	\
+4370,	1400	\
+4980,	1580	\
+5390,	1770	\
+5600,	1930	\
+5730,	2000	\
+6040,	2070	\
+6170,	2160	\
+6310,	2190	\
+6650,	2250	\
+6870,	2350	\
+7230,	2460	\
+7610,	2600	\
+7830,	2740	\
+8040,	2820	\
+8470,	2850	\
+8610,	2940	\
+8910,	3010	\
+9070,	3130	\
+9260,	3220	\
+9490,	3240	\
+9590,	3340	\
+9890,	3470	\
+10200,	3540	\
+10330,	3610	\
+10700,	3660	\
+11010,	3750	\
+11270,	3910	\
+11750,	4000	\
+11960,	4140	\
+12460,	4300	\
+12460,	4300	\
+12540,	4390	\
+12860,	4550	\
+13230,	4620	\
+13420,	4670	\
+13550,	4780	\
+13670,	4760	\
+13860,	4810	\
+13960,	4970	\
+14380,	5080	\
+14680,	5150	\
+14820,	5220	\
+15630,	5430	\
+16770,	5910	
+);
+#delimit cr
+
+
 local yearlo "1973"
 local yearhi "2023"
 
@@ -120,11 +250,28 @@ tempvar index1 /* index for year */
 
 gen int `index1' = (`year1' - `yearlo') + 1
 
+tempvar fips1
+if (mi("`fips'")) local fips "22"
+capture gen int `fips1' = (`fips')
+if _rc ~=0 {
+	disp in red "invalid expression for FIPS code: `fips'"
+	exit 198
+}
 
+capture assert (`fips1' >= 1 & `fips1' <= 56) | mi(`fips1')
+if _rc ~=0 {
+    disp as error  "Warning: year expression has out-of-bounds values"
+    /* But do not exit; just let out-of-bounds values yield missing. */
+}
 
 tempvar base incr
 gen int `base' = `povtable'[`index1', 1]
 gen int `incr' = `povtable'[`index1', 2]
+quietly replace `base' = `povtableAK'[`index1', 1] if `fips1' == 2
+quietly replace `incr' = `povtableAK'[`index1', 2] if `fips1' == 2
+quietly replace `base' = `povtableHI'[`index1', 1] if `fips1' == 15
+quietly replace `incr' = `povtableHI'[`index1', 2] if `fips1' == 15
+
 
 
 
