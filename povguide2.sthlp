@@ -102,5 +102,11 @@ Typically, you would follow this with something like...{p_end}
 
 
 {title:Author}
-{p 4 4 2}
-Original author: David Kantor. Updated by Reginald Hebert to include guidelines through 2023, along with Alaska and Hawaii tables.{p_end}
+{pstd}Original author: David Kantor. {p_end}
+{pstd}Updated by Reginald Hebert to include guidelines through 2023, along with Alaska and Hawaii tables.{p_end}
+
+{marker contact}{...}
+{title:Contact}
+{pstd}Reginald Hebert{break}
+Georgia State University{break}
+rhebert3@student.gsu.edu{p_end}
