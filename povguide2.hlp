@@ -17,7 +17,7 @@ help for {hi:povguide2}
 
 {p 4 4 2}
 {cmd:povguide2} generates a numeric variable representing the official
-U.S. poverty guideline. This is an update to the original {cmd:povguide} by David Kantor. Supports years 1973-2023.
+U.S. poverty guideline. This is an update to the original {cmd:povguide} by David Kantor. Supports years 1973-2023, plus guideline values for Alaska and Hawaii.
 
 {p 4 4 2}
 Important: this is one of two official poverty levels
