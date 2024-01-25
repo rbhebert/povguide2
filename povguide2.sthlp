@@ -7,7 +7,7 @@ help for {hi:povguide2}
 {title:Generate the U.S. Poverty Guideline value for a given family size and year}
 
 {p 8 17 2}
-{cmd:povguide, gen(}{it:newvar}{cmd:)}
+{cmd:povguide2, gen(}{it:newvar}{cmd:)}
 {cmd:famsize(}{it:famsize}{cmd:)}
 {cmd:year(}{it:year}{cmd:)}
 [{cmd:fips(}{it:fips}{cmd:)}]
