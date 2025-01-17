@@ -1,7 +1,7 @@
 # povguide2
-Federal Poverty Guidelines by family size and year, 1973-2024
+Federal Poverty Guidelines by family size and year, 1973-2025
 
-This is an extension of the original Stata module POVGUIDE by David Kantor written to include guideline data from 2009-2024, whereas the original module stopped at 2008. Moreover, we have added the official guideline data for Alaska and Hawaii. The FIPS code argument is optional. When omitted, the command defaults to the poverty guideline for the 48 contiguous states only. When specified, poverty guidelines for Alaska and Hawaii are generated for FIPS codes 2 and 15, with the standard poverty guidelines for all others.
+This is an extension of the original Stata module POVGUIDE by David Kantor written to include guideline data from 1973-2025, whereas the original module stopped at 2008. Moreover, I have added the official guideline data for Alaska and Hawaii. The FIPS code argument is optional. When omitted, the command defaults to the poverty guideline for the 48 contiguous states only. When specified, poverty guidelines for Alaska and Hawaii are generated for FIPS codes 2 and 15, with the standard poverty guidelines for all others.
 
 Original module: 
 https://econpapers.repec.org/software/bocbocode/s456935.htm
