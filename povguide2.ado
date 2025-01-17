@@ -6,9 +6,9 @@ by Reginald Hebert (reginald.hebert@yale.edu)
 17 January 2025		- Updated using 2025 tables
 24 January 2024		- Updated help file to amend a typo; added 2024 tables
 20 September 2023 	- Code cleanup
-20 August 2023 		- 	Added Alaska and Hawaii tables, plus option for enabling 
-					state FIPS as an argument
-4 August 2023 		- 	Added years 2009 through 2023
+20 August 2023 		- Added Alaska and Hawaii tables, plus option for enabling 
+				state FIPS as an argument
+4 August 2023 		- Added years 2009 through 2023
 -------------------------------------------------------------------------------
 Original module: 
 https://econpapers.repec.org/software/bocbocode/s456935.htm
